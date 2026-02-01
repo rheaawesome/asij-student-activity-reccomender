@@ -4,66 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ASIJ College Profile Screener</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <section class="hero">
-        <div class="overlay">
-            <h1>College Profile Screener</h1>
-            <button onclick="scrollToSection('form-section')" class="start-btn">Start</button>
+        <div class="hero-content">
+            <h1 class="main-title">College Profile Screener</h1>
+            <button onclick="scrollToSection('info-section')" class="start-btn">Start</button>
         </div>
     </section>
 
-    <section class="info-section">
-        <h2>Welcome ASIJ Students</h2>
-        <p>Personalized recommendations based on your unique journey.</p>
+    <section id="info-section" class="info-section">
+        <h2 class="serif-text">Welcome ASIJ Students</h2>
+        <p class="subtitle">Personalized recommendations for ASIJ students based on your courses, interests, and activities.</p>
+        
         <div class="info-grid">
-            <div class="info-card">Built for ASIJ</div>
-            <div class="info-card">Find your passion</div>
-            <div class="info-card">Discover opportunities</div>
+            <div class="info-card">
+                <div class="card-img" style="background-image: url('card1.png');"></div>
+                <div class="card-label">Built for ASIJ students</div>
+            </div>
+            <div class="info-card">
+                <div class="card-img" style="background-image: url('card2.png');"></div>
+                <div class="card-label">Find your passion</div>
+            </div>
+            <div class="info-card">
+                <div class="card-img" style="background-image: url('card3.png');"></div>
+                <div class="card-label">Discover new opportunities</div>
+            </div>
         </div>
+        <button onclick="scrollToSection('form-section')" class="next-btn">Next: Tell us about you</button>
     </section>
 
-    <section id="form-section" class="form-section">
-        <h2>Tell Us About You</h2>
-        <form id="screener-form">
-            <div class="input-group">
-                <h3>Current Grade Level</h3>
-                <div class="radio-options">
-                    <label><input type="radio" name="grade" value="Freshman"> Freshman</label>
-                    <label><input type="radio" name="grade" value="Sophomore"> Sophomore</label>
-                    <label><input type="radio" name="grade" value="Junior"> Junior</label>
-                    <label><input type="radio" name="grade" value="Senior"> Senior</label>
-                </div>
-            </div>
-
-            <div class="input-group">
-                <h3>Interests (Select All)</h3>
-                <div class="checkbox-grid">
-                    <label><input type="checkbox" name="interest" value="STEM"> Sciences</label>
-                    <label><input type="checkbox" name="interest" value="Arts"> Arts</label>
-                    <label><input type="checkbox" name="interest" value="Business"> Business</label>
-                    <label><input type="checkbox" name="interest" value="Humanities"> Humanities</label>
-                </div>
-            </div>
-
-            <button type="button" onclick="generateRecommendations()" class="submit-btn">Get Recommendations</button>
-        </form>
-    </section>
-
-    <section id="loading-section" class="loading-section hidden">
-        <div class="loader"></div>
-        <p>Analyzing your profile...</p>
-    </section>
-
-    <section id="results-section" class="results-section hidden">
-        <h2>Your Personalized Opportunities</h2>
-        <div id="recommendations-list" class="results-grid">
-            </div>
-        <button onclick="location.reload()" class="start-btn">Start Over</button>
-    </section>
-
-    <script src="script.js"></script>
-</body>
+    </body>
 </html>
