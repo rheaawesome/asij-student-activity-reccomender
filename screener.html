@@ -119,7 +119,6 @@
         }
 
         .activity-column {
-            /* Removed background to match clean look of screenshot */
             padding: 5px; 
         }
 
@@ -305,7 +304,7 @@
             <div class="columns-3">
                 <div class="activity-column">
                     <h3>A Clubs</h3>
-                    <div id="aclub-container"></div> <p style="color:#555; font-style:italic; font-size:0.9rem;">Coming later...</p>
+                    <p style="color:#555; font-style:italic; font-size:0.9rem;">Coming later...</p>
                 </div>
                 <div class="activity-column">
                     <h3>B Clubs</h3>
@@ -322,20 +321,17 @@
                 
                 <div class="activity-column">
                     <h3>Fall</h3>
-                    <div class="custom-select-container" id="fall-container">
-                        </div>
+                    <div class="custom-select-container" id="fall-container"></div>
                 </div>
 
                 <div class="activity-column">
                     <h3>Winter</h3>
-                    <div class="custom-select-container" id="winter-container">
-                        </div>
+                    <div class="custom-select-container" id="winter-container"></div>
                 </div>
 
                 <div class="activity-column">
                     <h3>Spring</h3>
-                    <div class="custom-select-container" id="spring-container">
-                        </div>
+                    <div class="custom-select-container" id="spring-container"></div>
                 </div>
             </div>
 
@@ -417,8 +413,6 @@
         function goToStep2() {
             document.getElementById('step-1').classList.add('hidden');
             document.getElementById('step-2').classList.remove('hidden');
-            
-            // Render drop-downs only once when entering step 2
             initDropdowns(); 
             window.scrollTo(0,0);
         }
@@ -454,7 +448,10 @@
             const defaultOption = document.createElement('div');
             defaultOption.className = 'option-item not-chosen';
             defaultOption.textContent = "Not Chosen";
-            defaultOption.onclick = () => selectItem(key, null);
+            
+            // PASSING "Not Chosen" STRING so it triggers the filled state
+            defaultOption.onclick = () => selectItem(key, "Not Chosen");
+            
             listContainer.appendChild(defaultOption);
 
             // 2. Add Activity items
@@ -487,14 +484,14 @@
             const textSpan = document.getElementById(`${key}-selected-text`);
             const dropdown = document.getElementById(`${key}-dropdown`);
 
-            if (value === null || value === "Not Chosen") {
-                // Reset to default state
-                textSpan.textContent = "Choose here.";
-                displayBox.classList.remove('filled');
-            } else {
-                // Set to Selected State (Yellow Box)
+            if (value) {
+                // Whether it's an activity OR "Not Chosen", we show the yellow filled box
                 textSpan.textContent = value;
                 displayBox.classList.add('filled');
+            } else {
+                // Fallback (initial state)
+                textSpan.textContent = "Choose here.";
+                displayBox.classList.remove('filled');
             }
 
             // Hide dropdown
