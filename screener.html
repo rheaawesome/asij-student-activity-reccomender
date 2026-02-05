@@ -163,7 +163,7 @@
                 <input type="checkbox" id="agri"><label for="agri" class="c-agri">Agriculture & Environmental Studies</label>
             </div>
 
-            <button type="button" class="next-btn" onclick="alert('Profile Saved!')">Submit Profile</button>
+            <button type="button" class="next-btn" onclick="alert('Profile Saved! Ready for next step.')">Continue</button>
         </form>
     </div>
 
@@ -200,32 +200,25 @@
             if (grade === 'freshman') {
                 coursesToShow = freshmanCourses;
             } else {
-                // Placeholder for other grades since we only have Freshman data right now
                 courseBox.innerHTML = "<p style='color: #888;'>Course data for " + grade + " is coming soon.</p>";
                 return;
             }
 
             // Loop through the list and create checkboxes
             coursesToShow.forEach(courseName => {
-                // Create the label container
                 const label = document.createElement('label');
                 label.className = "course-item";
 
-                // Create the checkbox
                 const checkbox = document.createElement('input');
                 checkbox.type = "checkbox";
                 checkbox.name = "courses";
                 checkbox.value = courseName;
 
-                // Create the text span
                 const span = document.createElement('span');
                 span.textContent = " " + courseName;
 
-                // Put them together
                 label.appendChild(checkbox);
                 label.appendChild(span);
-
-                // Add to the box
                 courseBox.appendChild(label);
             });
         }
