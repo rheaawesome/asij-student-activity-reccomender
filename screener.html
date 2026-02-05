@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #000000; /* Pure black background */
+            color: white;
+            font-family: 'Inter', sans-serif; /* Clean font for the questions */
+            margin: 0;
+            padding: 40px;
+        }
+
+        /* The Main Container */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* 1. HEADER SECTION */
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        /* The Gold Line */
+        .divider {
+            height: 2px;
+            background-color: #FFD700; /* Gold */
+            width: 100%;
+            margin-bottom: 40px;
+        }
+
+        /* 2. QUESTION TITLES */
+        h3 {
+            font-size: 1.5rem;
+            margin-top: 40px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        /* 3. INTERACTIVE OPTIONS (Hiding the checkboxes) */
+        /* We hide the actual checkbox circle and use the label as the button */
+        input[type="radio"], input[type="checkbox"] {
+            display: none;
+        }
+
+        label {
+            font-size: 1.2rem;
+            margin-right: 15px;
+            cursor: pointer;
+            display: inline-block;
+            margin-bottom: 10px;
+            transition: opacity 0.3s;
+        }
+
+        /* Opacity effect: Unselected items look slightly dim, selected look bright */
+        label:hover {
+            opacity: 0.8;
+        }
+        
+        /* Visual cue for selection: Underline when clicked */
+        input:checked + label {
+            text-decoration: underline;
+            font-weight: bold;
+            transform: scale(1.05); /* Grows slightly */
+        }
+
+        /* 4. SPECIFIC COLORS (Matching your screenshot) */
+        
+        /* Grade Levels */
+        .freshman { color: #ff4d4d; } /* Red */
+        .sophomore { color: #ff66b2; } /* Pink */
+        .junior { color: #00ced1; } /* Teal/Cyan */
+        .senior { color: #32cd32; } /* Green */
+
+        /* Interests Colors */
+        .c-math { color: #ff6b6b; }
+        .c-science { color: #9acd32; }
+        .c-cs { color: #a3a3c2; }
+        .c-eng { color: #87ceeb; }
+        .c-bus { color: #ffd700; }
+        .c-soc { color: #ffa500; }
+        .c-health { color: #4169e1; }
+        .c-arts { color: #ff69b4; }
+        .c-edu { color: #87cefa; }
+        .c-agri { color: #32cd32; }
+
+        /* 5. COURSE SELECTION BOX */
+        .course-box {
+            border: 1px solid #333;
+            padding: 20px;
+            height: 150px;
+            overflow-y: scroll; /* Allows scrolling if list is long */
+            background-color: #111;
+            border-radius: 8px;
+        }
+        
+        .course-item {
+            display: block;
+            color: #ddd;
+            margin-bottom: 5px;
+            font-size: 1rem;
+        }
+        
+        .course-item input:checked + span {
+            color: #FFD700; /* Turns gold when selected */
+        }
+
+        /* Submit Button */
+        .next-btn {
+            background-color: #FFD700;
+            color: black;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-family: 'Playfair Display', serif;
+            font-weight: bold;
+            margin-top: 50px;
+            cursor: pointer;
+            border-radius: 4px;
+            display: block;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Tell Us About You</h1>
+        <div class="divider"></div>
+
+        <form>
+            <h3>Current Grade Level</h3>
+            <div class="options-container">
+                <input type="radio" name="grade" id="freshman">
+                <label for="freshman" class="freshman">Freshman</label>
+
+                <input type="radio" name="grade" id="sophomore">
+                <label for="sophomore" class="sophomore">Sophomore</label>
+
+                <input type="radio" name="grade" id="junior">
+                <label for="junior" class="junior">Junior</label>
+
+                <input type="radio" name="grade" id="senior">
+                <label for="senior" class="senior">Senior</label>
+            </div>
+
+            <h3>Select All Courses You Have or Are Taking</h3>
+            <p style="color: #888; margin-top: -10px; font-size: 0.9rem;">(Scroll to see more)</p>
+            
+            <div class="course-box">
+                <label class="course-item">
+                    <input type="checkbox"> <span>AP English Language</span>
+                </label>
+                <label class="course-item">
+                    <input type="checkbox"> <span>AP Calculus AB/BC</span>
+                </label>
+                <label class="course-item">
+                    <input type="checkbox"> <span>Biology Honors</span>
+                </label>
+                <label class="course-item">
+                    <input type="checkbox"> <span>Chemistry</span>
+                </label>
+                <label class="course-item">
+                    <input type="checkbox"> <span>World History</span>
+                </label>
+                <label class="course-item">
+                    <input type="checkbox"> <span>AP Computer Science A</span>
+                </label>
+                <label class="course-item">
+                    <input type="checkbox"> <span>Physics</span>
+                </label>
+                <label class="course-item">
+                    <input type="checkbox"> <span>Spanish III</span>
+                </label>
+            </div>
+
+            <h3>Interests (Select All That Apply)</h3>
+            <div class="interests-container">
+                <input type="checkbox" id="math">
+                <label for="math" class="c-math">Mathematics</label>
+
+                <input type="checkbox" id="science">
+                <label for="science" class="c-science">Sciences</label>
+
+                <input type="checkbox" id="cs">
+                <label for="cs" class="c-cs">Computer Science</label>
+
+                <input type="checkbox" id="eng">
+                <label for="eng" class="c-eng">Engineering</label>
+                
+                <br> <input type="checkbox" id="business">
+                <label for="business" class="c-bus">Business</label>
+
+                <input type="checkbox" id="soc">
+                <label for="soc" class="c-soc">Social Sciences & Humanities</label>
+
+                <input type="checkbox" id="health">
+                <label for="health" class="c-health">Health & Medicine</label>
+                
+                <br> 
+
+                <input type="checkbox" id="arts">
+                <label for="arts" class="c-arts">Arts & Communications</label>
+
+                <input type="checkbox" id="edu">
+                <label for="edu" class="c-edu">Education & Public Service</label>
+
+                <input type="checkbox" id="agri">
+                <label for="agri" class="c-agri">Agriculture & Environmental Studies</label>
+            </div>
+
+            <button type="button" class="next-btn" onclick="alert('Profile Saved!')">Submit Profile</button>
+        </form>
+    </div>
+
+</body>
+</html>
