@@ -362,31 +362,23 @@
         // --- NEW CLUB DATA FROM YOUR FILE ---
         const clubData = {
             aclubs: [
-                "Aerospace Club", "Ambassadors", "ASIJTV", "Animal Advocates", "Black Student Union", "Daruma", 
-                "Art Club", "Business Club", "Hanabi/What's The Dealio", "Beyond The Plate", "Computer Science", 
-                "HS Movie Club", "COSA", "Fight On!", "NHS", "Engineering Club", "Food Equality Alliance (FEA)", 
-                "Prom Committee", "English Circle", "Evergreen", "Global Cultures Club", "Habitat Club", 
-                "Sports Medicine", "Yearbook", "GSA", "Hands on Tokyo", "Table Top Games", "History Club", 
-                "Human Rights Club", "Jazz Club", "Mindfulness", "Kagaku4Kids", "Math Circle", 
-                "Music Production Club", "Outdoor Adventure", "Card Game Club", "Philosophy", "PICSEL", 
-                "Chess Club", "Pre-Medical Society", "SAGE", "SAFE", "Sudachi", "South Asian Student Union", 
-                "Tokyo Sports Outreach", "Sustainable Fashion", "Train Club", "Activities & Athletics Council", 
-                "Tassel", "Tri-M", "Enrichment Council", "Law Society", "Service Council", 
-                "Student Advisory Council", "Student Council (StuCo)", "Mustang Council"
+                "Aerospace Club", "Animal Advocates", "Art Club", "Beyond The Plate", "COSA", 
+                "Engineering Club", "English Circle", "Evergreen", "GSA", "History Club", 
+                "Jazz Club", "Kagaku4Kids", "Math Circle", "Philosophy", "Pre-Medical Society", 
+                "SAFE", "South Asian Student Union", "Sustainable Fashion", "Tassel", "Law Society"
             ],
-            // Note: Since the PDF mixed columns slightly, I have categorized them 
-            // broadly. You can move items between these lists if needed.
             bclubs: [
                 "Ambassadors", "Black Student Union", "Business Club", "Computer Science", "Fight On!", 
                 "Food Equality Alliance (FEA)", "Global Cultures Club", "Habitat Club", "Hands on Tokyo", 
-                "Human Rights Club", "Mindfulness", "Music Production Club", "Outdoor Adventure", "PICSEL", 
-                "SAGE", "Sudachi", "Tokyo Sports Outreach", "Train Club", "Tri-M"
+                "Human Rights Club", "Mindfulness", "Music Production Club", "Outdoor Adventure", 
+                "PICSEL", "SAGE", "Sudachi", "Tokyo Sports Outreach", "Train Club", "Tri-M"
             ],
             nonrot: [
-                "ASIJTV", "Daruma", "Hanabi/What's The Dealio", "HS Movie Club", "NHS", "Prom Committee", 
-                "Sports Medicine", "Yearbook", "Table Top Games", "Card Game Club", "Chess Club", 
-                "Activities & Athletics Council", "Enrichment Council", "Service Council", 
-                "Student Advisory Council", "Student Council (StuCo)", "Mustang Council"
+                "ASIJTV", "Daruma", "Hanabi/What's The Dealio", "HS Movie Club", "NHS", 
+                "Prom Committee", "Sports Medicine", "Yearbook", "Table Top Games", 
+                "Card Game Club", "Chess Club", "Activities & Athletics Council", 
+                "Enrichment Council", "Service Council", "Student Advisory Council", 
+                "Student Council (StuCo)", "Mustang Council"
             ]
         };
 
@@ -454,7 +446,7 @@
         // --- STEP 2: DROPDOWN LOGIC ---
         
         function initDropdowns() {
-            [cite_start]// Init Clubs [cite: 1]
+            // Init Clubs
             createDropdown("aclubs", clubData.aclubs);
             createDropdown("bclubs", clubData.bclubs);
             createDropdown("nonrot", clubData.nonrot);
