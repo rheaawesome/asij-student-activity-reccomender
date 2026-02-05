@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Profile</title>
+    <title>ASIJ Profile Screener</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
     <style>
         body {
-            background-color: #000000; /* Pure black background */
+            background-color: #000000;
             color: white;
             font-family: 'Inter', sans-serif;
             margin: 0;
@@ -16,10 +16,11 @@
         }
 
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
         }
 
+        /* TYPOGRAPHY */
         h1 {
             font-family: 'Playfair Display', serif;
             font-size: 3.5rem;
@@ -27,50 +28,72 @@
             color: white;
         }
 
+        h2 {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.8rem;
+            margin-top: 50px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: #ccc;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
         .divider {
             height: 2px;
-            background-color: #FFD700; /* Gold */
+            background-color: #FFD700;
             width: 100%;
             margin-bottom: 40px;
         }
 
-        h3 {
-            font-size: 1.5rem;
-            margin-top: 40px;
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-
-        /* Hiding the standard radio buttons/checkboxes */
-        input[type="radio"], input[type="checkbox"] {
-            display: none;
-        }
-
-        /* Styling the clickable text labels */
-        label {
+        /* --- STEP 1 STYLES --- */
+        .grade-options input[type="radio"] { display: none; }
+        .grade-options label {
             font-size: 1.2rem;
             margin-right: 15px;
             cursor: pointer;
-            display: inline-block;
-            margin-bottom: 10px;
-            transition: opacity 0.3s;
+            transition: 0.3s;
         }
-
-        label:hover { opacity: 0.8; }
-        
-        /* Underline effect when selected */
-        input:checked + label {
+        .grade-options label:hover { opacity: 0.8; }
+        .grade-options input:checked + label {
             text-decoration: underline;
             font-weight: bold;
             transform: scale(1.05);
         }
 
-        /* COLORS */
-        .freshman { color: #ff4d4d; } 
+        /* Grade Colors */
+        .freshman { color: #ff4d4d; }
         .sophomore { color: #ff66b2; }
         .junior { color: #00ced1; }
         .senior { color: #32cd32; }
 
+        /* Course Box */
+        .course-box {
+            border: 1px solid #333;
+            padding: 20px;
+            height: 250px;
+            overflow-y: scroll;
+            background-color: #111;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .course-item {
+            display: block;
+            color: #ddd;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+        .course-item input { display: none; } /* Hide checkbox */
+        .course-item span { transition: color 0.2s; }
+        .course-item input:checked + span { color: #FFD700; font-weight: bold; }
+
+        /* Interest Colors */
         .c-math { color: #ff6b6b; }
         .c-science { color: #9acd32; }
         .c-cs { color: #a3a3c2; }
@@ -82,30 +105,59 @@
         .c-edu { color: #87cefa; }
         .c-agri { color: #32cd32; }
 
-        /* COURSE BOX STYLES */
-        .course-box {
-            border: 1px solid #333;
-            padding: 20px;
-            height: 250px; /* Made it taller for the long list */
-            overflow-y: scroll; 
-            background-color: #111;
-            border-radius: 8px;
-        }
-        
-        .course-item {
-            display: block;
-            color: #ddd;
-            margin-bottom: 8px;
-            font-size: 1rem;
-            border-bottom: 1px solid #222;
-            padding-bottom: 5px;
-        }
-        
-        .course-item input:checked + span {
-            color: #FFD700; 
+        .interests-container label { display: inline-block; margin-bottom: 10px; cursor: pointer; }
+        .interests-container input { display: none; }
+        .interests-container input:checked + label { text-decoration: underline; font-weight: bold; }
+
+
+        /* --- STEP 2: EXTRACURRICULARS STYLES --- */
+        .hidden { display: none; }
+
+        .columns-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
         }
 
-        .next-btn {
+        .activity-column {
+            background-color: #111; /* Slight background to separate columns */
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .activity-item {
+            display: inline-block;
+            margin: 5px 5px 5px 0;
+            padding: 8px 12px;
+            border: 1px solid #333;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            color: #ddd;
+            transition: all 0.2s ease;
+        }
+
+        .activity-item:hover {
+            border-color: #666;
+        }
+
+        /* The Yellow Box Selection Effect */
+        .activity-item.selected {
+            background-color: #FFD700;
+            color: black;
+            border-color: #FFD700;
+            font-weight: 600;
+        }
+
+        .section-header {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        /* BUTTONS */
+        .action-btn {
             background-color: #FFD700;
             color: black;
             border: none;
@@ -113,102 +165,164 @@
             font-size: 1.2rem;
             font-family: 'Playfair Display', serif;
             font-weight: bold;
-            margin-top: 50px;
+            margin-top: 40px;
             cursor: pointer;
             border-radius: 4px;
             display: block;
+            width: fit-content;
         }
+        
+        .action-btn:hover {
+            background-color: #ffed4d;
+        }
+
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>Tell Us About You</h1>
-        <div class="divider"></div>
+        
+        <div id="step-1">
+            <h1>Tell Us About You</h1>
+            <div class="divider"></div>
 
-        <form>
-            <h3>Current Grade Level</h3>
-            <div class="options-container">
-                <input type="radio" name="grade" id="freshman" onclick="updateCourses('freshman')">
-                <label for="freshman" class="freshman">Freshman</label>
+            <form>
+                <h3>Current Grade Level</h3>
+                <div class="grade-options">
+                    <input type="radio" name="grade" id="freshman" onclick="updateCourses('freshman')">
+                    <label for="freshman" class="freshman">Freshman</label>
 
-                <input type="radio" name="grade" id="sophomore" onclick="updateCourses('sophomore')">
-                <label for="sophomore" class="sophomore">Sophomore</label>
+                    <input type="radio" name="grade" id="sophomore" onclick="updateCourses('sophomore')">
+                    <label for="sophomore" class="sophomore">Sophomore</label>
 
-                <input type="radio" name="grade" id="junior" onclick="updateCourses('junior')">
-                <label for="junior" class="junior">Junior</label>
+                    <input type="radio" name="grade" id="junior" onclick="updateCourses('junior')">
+                    <label for="junior" class="junior">Junior</label>
 
-                <input type="radio" name="grade" id="senior" onclick="updateCourses('senior')">
-                <label for="senior" class="senior">Senior</label>
+                    <input type="radio" name="grade" id="senior" onclick="updateCourses('senior')">
+                    <label for="senior" class="senior">Senior</label>
+                </div>
+
+                <h3>Select All Courses You Have or Are Taking</h3>
+                <div class="course-box" id="courseList">
+                    <p style="color: #666; font-style: italic;">Select a grade level above to see courses.</p>
+                </div>
+
+                <h3>Interests (Select All That Apply)</h3>
+                <div class="interests-container">
+                    <input type="checkbox" id="math"><label for="math" class="c-math">Mathematics</label>
+                    <input type="checkbox" id="science"><label for="science" class="c-science">Sciences</label>
+                    <input type="checkbox" id="cs"><label for="cs" class="c-cs">Computer Science</label>
+                    <input type="checkbox" id="eng"><label for="eng" class="c-eng">Engineering</label>
+                    <br>
+                    <input type="checkbox" id="business"><label for="business" class="c-bus">Business</label>
+                    <input type="checkbox" id="soc"><label for="soc" class="c-soc">Social Sciences & Humanities</label>
+                    <input type="checkbox" id="health"><label for="health" class="c-health">Health & Medicine</label>
+                    <br>
+                    <input type="checkbox" id="arts"><label for="arts" class="c-arts">Arts & Communications</label>
+                    <input type="checkbox" id="edu"><label for="edu" class="c-edu">Education & Public Service</label>
+                    <input type="checkbox" id="agri"><label for="agri" class="c-agri">Agriculture & Environmental Studies</label>
+                </div>
+
+                <button type="button" class="action-btn" onclick="goToStep2()">Continue</button>
+            </form>
+        </div>
+
+        <div id="step-2" class="hidden">
+            <h1 class="section-header">Extracurriculars</h1>
+            <div class="divider"></div>
+
+            <h2>Clubs</h2>
+            <div class="columns-3">
+                <div class="activity-column">
+                    <h3>A Clubs</h3>
+                    <p style="color:#555; font-style:italic;">Coming later...</p>
+                </div>
+                <div class="activity-column">
+                    <h3>B Clubs</h3>
+                    <p style="color:#555; font-style:italic;">Coming later...</p>
+                </div>
+                <div class="activity-column">
+                    <h3>Non-Rotational</h3>
+                    <p style="color:#555; font-style:italic;">Coming later...</p>
+                </div>
             </div>
 
-            <h3>Select All Courses You Have or Are Taking</h3>
-            <div class="course-box" id="courseList">
-                <p style="color: #666; font-style: italic;">Select a grade level above to see courses.</p>
+            <h2>Afterschool Activities</h2>
+            <div class="columns-3">
+                
+                <div class="activity-column" id="fall-column">
+                    <h3>Fall</h3>
+                    </div>
+
+                <div class="activity-column" id="winter-column">
+                    <h3>Winter</h3>
+                    </div>
+
+                <div class="activity-column" id="spring-column">
+                    <h3>Spring</h3>
+                    </div>
             </div>
 
-            <h3>Interests (Select All That Apply)</h3>
-            <div class="interests-container">
-                <input type="checkbox" id="math"><label for="math" class="c-math">Mathematics</label>
-                <input type="checkbox" id="science"><label for="science" class="c-science">Sciences</label>
-                <input type="checkbox" id="cs"><label for="cs" class="c-cs">Computer Science</label>
-                <input type="checkbox" id="eng"><label for="eng" class="c-eng">Engineering</label>
-                <br>
-                <input type="checkbox" id="business"><label for="business" class="c-bus">Business</label>
-                <input type="checkbox" id="soc"><label for="soc" class="c-soc">Social Sciences & Humanities</label>
-                <input type="checkbox" id="health"><label for="health" class="c-health">Health & Medicine</label>
-                <br>
-                <input type="checkbox" id="arts"><label for="arts" class="c-arts">Arts & Communications</label>
-                <input type="checkbox" id="edu"><label for="edu" class="c-edu">Education & Public Service</label>
-                <input type="checkbox" id="agri"><label for="agri" class="c-agri">Agriculture & Environmental Studies</label>
-            </div>
+            <button type="button" class="action-btn" onclick="alert('Recommendations Generated! (Demo End)')">See Recommendations</button>
+        </div>
 
-            <button type="button" class="next-btn" onclick="alert('Profile Saved! Ready for next step.')">Continue</button>
-        </form>
     </div>
 
     <script>
-        // Data extracted from your PDF
+        // --- DATA SETS ---
         const freshmanCourses = [
-            "English 9", "Foundations of the Modern World", 
-            "Integrated Math 1", "Integrated Math 2", "Integrated Math 3", "Integrated Math 3/Precalculus",
-            "Geometry", "Algebra 2", "Precalculus", "Advanced Precalculus", 
-            "Calculus", "AP Calculus AB", "AP Calculus BC",
-            "Biology", 
-            "Design Products", "Design with Code", "Design with Physical Computing & Robotics",
-            "Global Citizenship in the Digital Age",
-            "Novice Mid Chinese", "Novice High Chinese", "Intermediate Chinese", "Intermediate Mid Chinese", "AP Chinese Language and Culture",
-            "Novice Mid-High Spanish", "Intermediate Spanish", "Intermediate Mid Spanish", "Intermediate High Spanish", "AP Spanish Language and Culture",
-            "Novice Japanese", "Novice Mid Japanese", "Novice High Japanese", "Intermediate Japanese", "AP Japanese Language and Culture", 
-            "Intermediate High Japanese", "Advanced Japanese", "Advanced High Japanese", "Superior Japanese: General Topics",
-            "Introduction to Band", "Concert Band 1", "Wind Ensemble", "Jazz Band",
-            "Concert Choir 1", "Concert Choir 2", "Chamber Singers",
-            "Concert Orchestra", "Chamber Orchestra",
-            "Modern Band", "Modern Band 2",
-            "Composition and Songwriting 1", "Composition and Songwriting 2",
-            "Acting 1", "Acting 2", "Advanced Acting", "Stagecraft",
-            "Art Foundations", "Digital Filmmaking 1", "Digital Filmmaking 2",
-            "Wellness 9", "Personal Fitness", "Strength Training and Conditioning"
+            "English 9", "Foundations of the Modern World", "Integrated Math 1", "Integrated Math 2", "Integrated Math 3", 
+            "Integrated Math 3/Precalculus", "Geometry", "Algebra 2", "Precalculus", "Advanced Precalculus", 
+            "Calculus", "AP Calculus AB", "AP Calculus BC", "Biology", "Design Products", "Design with Code", 
+            "Design with Physical Computing & Robotics", "Global Citizenship in the Digital Age", "Novice Mid Chinese", 
+            "Novice High Chinese", "Intermediate Chinese", "Intermediate Mid Chinese", "AP Chinese Language and Culture",
+            "Novice Mid-High Spanish", "Intermediate Spanish", "Intermediate Mid Spanish", "Intermediate High Spanish", 
+            "AP Spanish Language and Culture", "Novice Japanese", "Novice Mid Japanese", "Novice High Japanese", 
+            "Intermediate Japanese", "AP Japanese Language and Culture", "Intermediate High Japanese", "Advanced Japanese", 
+            "Advanced High Japanese", "Superior Japanese: General Topics", "Introduction to Band", "Concert Band 1", 
+            "Wind Ensemble", "Jazz Band", "Concert Choir 1", "Concert Choir 2", "Chamber Singers", "Concert Orchestra", 
+            "Chamber Orchestra", "Modern Band", "Modern Band 2", "Composition and Songwriting 1", "Composition and Songwriting 2",
+            "Acting 1", "Acting 2", "Advanced Acting", "Stagecraft", "Art Foundations", "Digital Filmmaking 1", 
+            "Digital Filmmaking 2", "Wellness 9", "Personal Fitness", "Strength Training and Conditioning"
         ];
 
+        const activitiesData = {
+            fall: [
+                "Cheer Varsity", "Cross Country Boys Varsity", "Cross Country Boys JV", "Cross Country Girls Varsity", 
+                "Cross Country Girls JV", "Football Varsity", "Tennis Boys & Girls Varsity", "Tennis Girls JV", 
+                "Volleyball Boys Varsity", "Volleyball Boys JV", "Volleyball Girls Varsity", "Volleyball Girls JV", 
+                "Assistant JV Girls Volleyball", "Brain Bowl", "Fall Play", "Fitness Center Supervisor", 
+                "Model United Nations", "Speech", "VEX Robotics"
+            ],
+            winter: [
+                "Boys Basketball Varsity", "Boys Basketball JV", "Boys Soccer Varsity", "Boys Soccer JV", 
+                "Boys Soccer Goalie Coach", "Cheer Varsity", "Field Hockey Varsity", "Girls Basketball Varsity", 
+                "Girls Basketball JV", "Swim Varsity", "Wrestling", "Fencing", "Debate", "Kyogen", 
+                "One-Act Plays", "Model United Nations", "VEX Robotics", "Fitness Center Supervisor"
+            ],
+            spring: [
+                "Badminton Varsity", "Baseball", "Girls Soccer Varsity", "Girls Soccer JV", "Softball", 
+                "Track & Field", "Fencing", "Model United Nations", "Spring Musical", "Fitness Center Supervisor", 
+                "VEX Robotics"
+            ]
+        };
+
+        // --- STEP 1 LOGIC ---
         function updateCourses(grade) {
             const courseBox = document.getElementById('courseList');
-            courseBox.innerHTML = ""; // Clear current list
+            courseBox.innerHTML = ""; 
 
             let coursesToShow = [];
-
-            if (grade === 'freshman') {
-                coursesToShow = freshmanCourses;
-            } else {
-                courseBox.innerHTML = "<p style='color: #888;'>Course data for " + grade + " is coming soon.</p>";
+            if (grade === 'freshman') coursesToShow = freshmanCourses;
+            else {
+                courseBox.innerHTML = "<p style='color: #888;'>Course data for " + grade + " coming soon.</p>";
                 return;
             }
 
-            // Loop through the list and create checkboxes
             coursesToShow.forEach(courseName => {
                 const label = document.createElement('label');
                 label.className = "course-item";
-
+                
                 const checkbox = document.createElement('input');
                 checkbox.type = "checkbox";
                 checkbox.name = "courses";
@@ -222,7 +336,38 @@
                 courseBox.appendChild(label);
             });
         }
-    </script>
 
+        // --- STEP SWITCHING LOGIC ---
+        function goToStep2() {
+            document.getElementById('step-1').classList.add('hidden');
+            document.getElementById('step-2').classList.remove('hidden');
+            
+            // Render activities only once when entering step 2
+            renderActivities(); 
+            // Scroll to top
+            window.scrollTo(0,0);
+        }
+
+        // --- STEP 2 LOGIC ---
+        function renderActivities() {
+            populateColumn('fall-column', activitiesData.fall);
+            populateColumn('winter-column', activitiesData.winter);
+            populateColumn('spring-column', activitiesData.spring);
+        }
+
+        function populateColumn(elementId, items) {
+            const container = document.getElementById(elementId);
+            // Don't clear the header (h3), append div items
+            items.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'activity-item';
+                div.textContent = item;
+                div.onclick = function() {
+                    this.classList.toggle('selected');
+                };
+                container.appendChild(div);
+            });
+        }
+    </script>
 </body>
 </html>
