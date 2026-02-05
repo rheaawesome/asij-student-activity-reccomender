@@ -18,6 +18,7 @@
         .container {
             max-width: 900px;
             margin: 0 auto;
+            padding-bottom: 100px; /* Space for scrolling */
         }
 
         /* TYPOGRAPHY */
@@ -67,13 +68,11 @@
             transform: scale(1.05);
         }
 
-        /* Grade Colors */
         .freshman { color: #ff4d4d; }
         .sophomore { color: #ff66b2; }
         .junior { color: #00ced1; }
         .senior { color: #32cd32; }
 
-        /* Course Box */
         .course-box {
             border: 1px solid #333;
             padding: 20px;
@@ -89,7 +88,7 @@
             margin-bottom: 8px;
             cursor: pointer;
         }
-        .course-item input { display: none; } /* Hide checkbox */
+        .course-item input { display: none; }
         .course-item span { transition: color 0.2s; }
         .course-item input:checked + span { color: #FFD700; font-weight: bold; }
 
@@ -109,7 +108,6 @@
         .interests-container input { display: none; }
         .interests-container input:checked + label { text-decoration: underline; font-weight: bold; }
 
-
         /* --- STEP 2: EXTRACURRICULARS STYLES --- */
         .hidden { display: none; }
 
@@ -117,36 +115,12 @@
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
             gap: 20px;
+            align-items: start;
         }
 
         .activity-column {
-            background-color: #111; /* Slight background to separate columns */
-            padding: 15px;
-            border-radius: 8px;
-        }
-
-        .activity-item {
-            display: inline-block;
-            margin: 5px 5px 5px 0;
-            padding: 8px 12px;
-            border: 1px solid #333;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.95rem;
-            color: #ddd;
-            transition: all 0.2s ease;
-        }
-
-        .activity-item:hover {
-            border-color: #666;
-        }
-
-        /* The Yellow Box Selection Effect */
-        .activity-item.selected {
-            background-color: #FFD700;
-            color: black;
-            border-color: #FFD700;
-            font-weight: 600;
+            /* Removed background to match clean look of screenshot */
+            padding: 5px; 
         }
 
         .section-header {
@@ -154,6 +128,102 @@
             font-size: 2.5rem;
             margin-top: 0;
             margin-bottom: 20px;
+        }
+
+        /* --- CUSTOM DROPDOWN STYLES --- */
+        .custom-select-container {
+            position: relative;
+            width: 100%;
+        }
+
+        /* The Display Button (Choose Here) */
+        .select-display {
+            border: 2px solid #FFD700; /* Gold Outline */
+            border-radius: 6px;
+            padding: 12px 15px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: transparent;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .select-display:hover {
+            border-color: #ffe066;
+            background-color: #1a1a1a;
+        }
+
+        /* The Filled Yellow State */
+        .select-display.filled {
+            background-color: #FFD700;
+            color: black;
+            border-color: #FFD700;
+        }
+
+        .select-display .arrow {
+            font-size: 0.8rem;
+        }
+
+        /* The Dropdown Menu */
+        .select-dropdown {
+            position: absolute;
+            top: 105%;
+            left: 0;
+            right: 0;
+            background-color: #111;
+            border: 1px solid #333;
+            border-radius: 6px;
+            z-index: 100;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.8);
+            display: none; /* Hidden by default */
+        }
+
+        .select-dropdown.show {
+            display: block;
+        }
+
+        /* Search Box inside Dropdown */
+        .search-box {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            background-color: #222;
+            border: none;
+            border-bottom: 1px solid #333;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+        }
+
+        .search-box::placeholder {
+            color: #666;
+        }
+
+        /* Options List */
+        .options-list {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .option-item {
+            padding: 10px 15px;
+            cursor: pointer;
+            color: #ddd;
+            transition: background 0.2s;
+            border-bottom: 1px solid #222;
+        }
+
+        .option-item:hover {
+            background-color: #333;
+            color: #FFD700;
+        }
+
+        .option-item.not-chosen {
+            font-style: italic;
+            color: #888;
         }
 
         /* BUTTONS */
@@ -165,7 +235,7 @@
             font-size: 1.2rem;
             font-family: 'Playfair Display', serif;
             font-weight: bold;
-            margin-top: 40px;
+            margin-top: 60px;
             cursor: pointer;
             border-radius: 4px;
             display: block;
@@ -235,32 +305,38 @@
             <div class="columns-3">
                 <div class="activity-column">
                     <h3>A Clubs</h3>
-                    <p style="color:#555; font-style:italic;">Coming later...</p>
+                    <div id="aclub-container"></div> <p style="color:#555; font-style:italic; font-size:0.9rem;">Coming later...</p>
                 </div>
                 <div class="activity-column">
                     <h3>B Clubs</h3>
-                    <p style="color:#555; font-style:italic;">Coming later...</p>
+                    <p style="color:#555; font-style:italic; font-size:0.9rem;">Coming later...</p>
                 </div>
                 <div class="activity-column">
                     <h3>Non-Rotational</h3>
-                    <p style="color:#555; font-style:italic;">Coming later...</p>
+                    <p style="color:#555; font-style:italic; font-size:0.9rem;">Coming later...</p>
                 </div>
             </div>
 
             <h2>Afterschool Activities</h2>
             <div class="columns-3">
                 
-                <div class="activity-column" id="fall-column">
+                <div class="activity-column">
                     <h3>Fall</h3>
-                    </div>
+                    <div class="custom-select-container" id="fall-container">
+                        </div>
+                </div>
 
-                <div class="activity-column" id="winter-column">
+                <div class="activity-column">
                     <h3>Winter</h3>
-                    </div>
+                    <div class="custom-select-container" id="winter-container">
+                        </div>
+                </div>
 
-                <div class="activity-column" id="spring-column">
+                <div class="activity-column">
                     <h3>Spring</h3>
-                    </div>
+                    <div class="custom-select-container" id="spring-container">
+                        </div>
+                </div>
             </div>
 
             <button type="button" class="action-btn" onclick="alert('Recommendations Generated! (Demo End)')">See Recommendations</button>
@@ -342,32 +418,116 @@
             document.getElementById('step-1').classList.add('hidden');
             document.getElementById('step-2').classList.remove('hidden');
             
-            // Render activities only once when entering step 2
-            renderActivities(); 
-            // Scroll to top
+            // Render drop-downs only once when entering step 2
+            initDropdowns(); 
             window.scrollTo(0,0);
         }
 
-        // --- STEP 2 LOGIC ---
-        function renderActivities() {
-            populateColumn('fall-column', activitiesData.fall);
-            populateColumn('winter-column', activitiesData.winter);
-            populateColumn('spring-column', activitiesData.spring);
+        // --- STEP 2: DROPDOWN LOGIC ---
+        
+        function initDropdowns() {
+            createDropdown("fall", activitiesData.fall);
+            createDropdown("winter", activitiesData.winter);
+            createDropdown("spring", activitiesData.spring);
         }
 
-        function populateColumn(elementId, items) {
-            const container = document.getElementById(elementId);
-            // Don't clear the header (h3), append div items
+        function createDropdown(key, items) {
+            const container = document.getElementById(`${key}-container`);
+            
+            // HTML Structure for Custom Dropdown
+            container.innerHTML = `
+                <div class="select-display" id="${key}-display" onclick="toggleDropdown('${key}')">
+                    <span id="${key}-selected-text">Choose here.</span>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="select-dropdown" id="${key}-dropdown">
+                    <input type="text" class="search-box" id="${key}-search" placeholder="Search..." onkeyup="filterOptions('${key}')" onclick="event.stopPropagation()">
+                    <div class="options-list" id="${key}-list">
+                        </div>
+                </div>
+            `;
+
+            // Populate List
+            const listContainer = document.getElementById(`${key}-list`);
+            
+            // 1. Add "Not Chosen" option first
+            const defaultOption = document.createElement('div');
+            defaultOption.className = 'option-item not-chosen';
+            defaultOption.textContent = "Not Chosen";
+            defaultOption.onclick = () => selectItem(key, null);
+            listContainer.appendChild(defaultOption);
+
+            // 2. Add Activity items
             items.forEach(item => {
                 const div = document.createElement('div');
-                div.className = 'activity-item';
+                div.className = 'option-item';
                 div.textContent = item;
-                div.onclick = function() {
-                    this.classList.toggle('selected');
-                };
-                container.appendChild(div);
+                div.onclick = () => selectItem(key, item);
+                listContainer.appendChild(div);
             });
         }
+
+        function toggleDropdown(key) {
+            // Close others first
+            ['fall', 'winter', 'spring'].forEach(k => {
+                if (k !== key) document.getElementById(`${k}-dropdown`).classList.remove('show');
+            });
+
+            const dropdown = document.getElementById(`${key}-dropdown`);
+            dropdown.classList.toggle('show');
+            
+            // Focus search box if opening
+            if(dropdown.classList.contains('show')) {
+                document.getElementById(`${key}-search`).focus();
+            }
+        }
+
+        function selectItem(key, value) {
+            const displayBox = document.getElementById(`${key}-display`);
+            const textSpan = document.getElementById(`${key}-selected-text`);
+            const dropdown = document.getElementById(`${key}-dropdown`);
+
+            if (value === null || value === "Not Chosen") {
+                // Reset to default state
+                textSpan.textContent = "Choose here.";
+                displayBox.classList.remove('filled');
+            } else {
+                // Set to Selected State (Yellow Box)
+                textSpan.textContent = value;
+                displayBox.classList.add('filled');
+            }
+
+            // Hide dropdown
+            dropdown.classList.remove('show');
+        }
+
+        function filterOptions(key) {
+            const filter = document.getElementById(`${key}-search`).value.toUpperCase();
+            const list = document.getElementById(`${key}-list`);
+            const items = list.getElementsByClassName('option-item');
+
+            for (let i = 0; i < items.length; i++) {
+                const txtValue = items[i].textContent || items[i].innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    items[i].style.display = "";
+                } else {
+                    items[i].style.display = "none";
+                }
+            }
+        }
+
+        // Close dropdowns if clicking outside
+        window.onclick = function(event) {
+            if (!event.target.matches('.select-display') && !event.target.matches('.select-display *') && !event.target.matches('.search-box')) {
+                const dropdowns = document.getElementsByClassName("select-dropdown");
+                for (let i = 0; i < dropdowns.length; i++) {
+                    if (dropdowns[i].classList.contains('show')) {
+                        dropdowns[i].classList.remove('show');
+                    }
+                }
+            }
+        }
+
     </script>
 </body>
 </html>
