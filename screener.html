@@ -18,7 +18,7 @@
         .container {
             max-width: 900px;
             margin: 0 auto;
-            padding-bottom: 100px; /* Space for scrolling */
+            padding-bottom: 100px;
         }
 
         /* TYPOGRAPHY */
@@ -157,9 +157,9 @@
 
         /* The Filled Yellow State */
         .select-display.filled {
-            background-color: #FFD700;
-            color: black;
-            border-color: #FFD700;
+            background-color: #FFD700 !important;
+            color: black !important;
+            border-color: #FFD700 !important;
         }
 
         .select-display .arrow {
@@ -184,7 +184,6 @@
             display: block;
         }
 
-        /* Search Box inside Dropdown */
         .search-box {
             width: 100%;
             padding: 10px;
@@ -197,11 +196,8 @@
             outline: none;
         }
 
-        .search-box::placeholder {
-            color: #666;
-        }
+        .search-box::placeholder { color: #666; }
 
-        /* Options List */
         .options-list {
             max-height: 200px;
             overflow-y: auto;
@@ -222,7 +218,8 @@
 
         .option-item.not-chosen {
             font-style: italic;
-            color: #888;
+            color: #FFD700;
+            border-bottom: 1px solid #FFD700;
         }
 
         /* BUTTONS */
@@ -244,7 +241,6 @@
         .action-btn:hover {
             background-color: #ffed4d;
         }
-
     </style>
 </head>
 <body>
@@ -304,31 +300,28 @@
             <div class="columns-3">
                 <div class="activity-column">
                     <h3>A Clubs</h3>
-                    <p style="color:#555; font-style:italic; font-size:0.9rem;">Coming later...</p>
+                    <div class="custom-select-container" id="aclubs-container"></div>
                 </div>
                 <div class="activity-column">
                     <h3>B Clubs</h3>
-                    <p style="color:#555; font-style:italic; font-size:0.9rem;">Coming later...</p>
+                    <div class="custom-select-container" id="bclubs-container"></div>
                 </div>
                 <div class="activity-column">
                     <h3>Non-Rotational</h3>
-                    <p style="color:#555; font-style:italic; font-size:0.9rem;">Coming later...</p>
+                    <div class="custom-select-container" id="nonrot-container"></div>
                 </div>
             </div>
 
             <h2>Afterschool Activities</h2>
             <div class="columns-3">
-                
                 <div class="activity-column">
                     <h3>Fall</h3>
                     <div class="custom-select-container" id="fall-container"></div>
                 </div>
-
                 <div class="activity-column">
                     <h3>Winter</h3>
                     <div class="custom-select-container" id="winter-container"></div>
                 </div>
-
                 <div class="activity-column">
                     <h3>Spring</h3>
                     <div class="custom-select-container" id="spring-container"></div>
@@ -357,6 +350,29 @@
             "Acting 1", "Acting 2", "Advanced Acting", "Stagecraft", "Art Foundations", "Digital Filmmaking 1", 
             "Digital Filmmaking 2", "Wellness 9", "Personal Fitness", "Strength Training and Conditioning"
         ];
+
+        [cite_start]// CLUB DATA FROM PDF [cite: 8]
+        const clubData = {
+            aclubs: [
+                "Aerospace Club", "Animal Advocates", "Art Club", "Beyond The Plate", "COSA", 
+                "Engineering Club", "English Circle", "Evergreen", "GSA", "History Club", 
+                "Jazz Club", "Kagaku4Kids", "Math Circle", "Philosophy", "Pre-Medical Society", 
+                "SAFE", "South Asian Student Union", "Sustainable Fashion", "Tassel", "Law Society"
+            ],
+            bclubs: [
+                "Ambassadors", "Black Student Union", "Business Club", "Computer Science", "Fight On!", 
+                "Food Equality Alliance (FEA)", "Global Cultures Club", "Habitat Club", "Hands on Tokyo", 
+                "Human Rights Club", "Mindfulness", "Music Production Club", "Outdoor Adventure", 
+                "PICSEL", "SAGE", "Sudachi", "Tokyo Sports Outreach", "Train Club", "Tri-M"
+            ],
+            nonrot: [
+                "ASIJTV", "Daruma", "Hanabi/What's The Dealio", "HS Movie Club", "NHS", 
+                "Prom Committee", "Sports Medicine", "Yearbook", "Table Top Games", 
+                "Card Game Club", "Chess Club", "Activities & Athletics Council", 
+                "Enrichment Council", "Service Council", "Student Advisory Council", 
+                "Student Council (StuCo)", "Mustang Council"
+            ]
+        };
 
         const activitiesData = {
             fall: [
@@ -418,8 +434,13 @@
         }
 
         // --- STEP 2: DROPDOWN LOGIC ---
-        
         function initDropdowns() {
+            // Initialize Club Dropdowns
+            createDropdown("aclubs", clubData.aclubs);
+            createDropdown("bclubs", clubData.bclubs);
+            createDropdown("nonrot", clubData.nonrot);
+
+            // Initialize Activity Dropdowns
             createDropdown("fall", activitiesData.fall);
             createDropdown("winter", activitiesData.winter);
             createDropdown("spring", activitiesData.spring);
@@ -428,7 +449,6 @@
         function createDropdown(key, items) {
             const container = document.getElementById(`${key}-container`);
             
-            // HTML Structure for Custom Dropdown
             container.innerHTML = `
                 <div class="select-display" id="${key}-display" onclick="toggleDropdown('${key}')">
                     <span id="${key}-selected-text">Choose here.</span>
@@ -436,25 +456,20 @@
                 </div>
                 <div class="select-dropdown" id="${key}-dropdown">
                     <input type="text" class="search-box" id="${key}-search" placeholder="Search..." onkeyup="filterOptions('${key}')" onclick="event.stopPropagation()">
-                    <div class="options-list" id="${key}-list">
-                        </div>
+                    <div class="options-list" id="${key}-list"></div>
                 </div>
             `;
 
-            // Populate List
             const listContainer = document.getElementById(`${key}-list`);
             
-            // 1. Add "Not Chosen" option first
+            // 1. ADD "NOT CHOSEN" OPTION (Triggers yellow box)
             const defaultOption = document.createElement('div');
             defaultOption.className = 'option-item not-chosen';
             defaultOption.textContent = "Not Chosen";
-            
-            // PASSING "Not Chosen" STRING so it triggers the filled state
             defaultOption.onclick = () => selectItem(key, "Not Chosen");
-            
             listContainer.appendChild(defaultOption);
 
-            // 2. Add Activity items
+            // 2. ADD ITEMS
             items.forEach(item => {
                 const div = document.createElement('div');
                 div.className = 'option-item';
@@ -465,15 +480,17 @@
         }
 
         function toggleDropdown(key) {
-            // Close others first
-            ['fall', 'winter', 'spring'].forEach(k => {
-                if (k !== key) document.getElementById(`${k}-dropdown`).classList.remove('show');
+            // Close all other dropdowns
+            const allKeys = ['aclubs', 'bclubs', 'nonrot', 'fall', 'winter', 'spring'];
+            allKeys.forEach(k => {
+                if (k !== key) {
+                    const el = document.getElementById(`${k}-dropdown`);
+                    if(el) el.classList.remove('show');
+                }
             });
 
             const dropdown = document.getElementById(`${key}-dropdown`);
             dropdown.classList.toggle('show');
-            
-            // Focus search box if opening
             if(dropdown.classList.contains('show')) {
                 document.getElementById(`${key}-search`).focus();
             }
@@ -485,16 +502,15 @@
             const dropdown = document.getElementById(`${key}-dropdown`);
 
             if (value) {
-                // Whether it's an activity OR "Not Chosen", we show the yellow filled box
+                // If value exists (including "Not Chosen"), turn YELLOW and set text
                 textSpan.textContent = value;
                 displayBox.classList.add('filled');
             } else {
-                // Fallback (initial state)
+                // Fallback (though "Not Chosen" catches most cases now)
                 textSpan.textContent = "Choose here.";
                 displayBox.classList.remove('filled');
             }
 
-            // Hide dropdown
             dropdown.classList.remove('show');
         }
 
@@ -513,7 +529,6 @@
             }
         }
 
-        // Close dropdowns if clicking outside
         window.onclick = function(event) {
             if (!event.target.matches('.select-display') && !event.target.matches('.select-display *') && !event.target.matches('.search-box')) {
                 const dropdowns = document.getElementsByClassName("select-dropdown");
@@ -524,7 +539,6 @@
                 }
             }
         }
-
     </script>
 </body>
 </html>
